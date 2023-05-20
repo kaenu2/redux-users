@@ -1,20 +1,14 @@
 import { Dispatch } from 'redux';
-import { UserAction, UserActionTypes } from '../../types/user';
 import axios from 'axios';
+
 import { TodoAction, TodoActionTypes } from '../../types/todo';
 
-export const fetchTodos = (page = 1, limit = 10) => {
+export const fetchTodos = (id: number) => {
 	return async (dispatch: Dispatch<TodoAction>) => {
 		try {
 			dispatch({ type: TodoActionTypes.FETCH_TODOS });
 			const response = await axios.get(
-				'https://jsonplaceholder.typicode.com/todos',
-				{
-					params: {
-						_page: page,
-						_limit: limit
-					}
-				}
+				`https://jsonplaceholder.typicode.com/users/${id}/todos`
 			);
 			setTimeout(() => {
 				dispatch({

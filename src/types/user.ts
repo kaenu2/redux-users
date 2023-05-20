@@ -1,7 +1,24 @@
 export interface UserState {
-	users: any[];
+	users: IUser[];
 	isLoading: boolean;
 	error: null | string;
+}
+
+export interface IUser {
+	id: 1;
+	name: string;
+	username: string;
+	email: string;
+	address: {
+		street: string;
+		suite: string;
+		city: string;
+		zipcode: string;
+		geo: {
+			lat: string;
+			lng: string;
+		};
+	};
 }
 
 export enum UserActionTypes {
@@ -15,7 +32,7 @@ interface FetchUserAction {
 }
 interface FetchUserSuccessAction {
 	type: UserActionTypes.FETCH_USERS_SUCCESS;
-	payload: any[];
+	payload: IUser[];
 }
 interface FetchUserErrorAction {
 	type: UserActionTypes.FETCH_USERS_ERROR;

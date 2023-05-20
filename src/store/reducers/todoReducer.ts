@@ -4,7 +4,7 @@ const initialState: TodoState = {
 	todos: [],
 	isLoading: false,
 	error: null,
-	limit: 10,
+	limit: 20,
 	page: 1
 };
 
@@ -21,7 +21,6 @@ export const todoReducer = (
 			return { ...state, isLoading: false, error: action.payload };
 		case TodoActionTypes.SET_TODOS_PAGE:
 			return { ...state, page: action.payload };
-
 		default:
 			return state;
 	}

@@ -1,54 +1,49 @@
 import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { useActiions } from '../hooks/useActiions';
+import TodoItem from './TodoItem';
 
 const TodoList: React.FC = () => {
-	const { page, error, isLoading, limit, todos } = useTypedSelector(
-		state => state.todo
-	);
-	const { fetchTodos, setTodoPage } = useActiions();
-	const pages = [1, 2, 3, 4, 5];
+	const { error, isLoading, todos } = useTypedSelector(state => state.todo);
+	const params = useParams();
+	const { fetchTodos } = useActiions();
 
 	useEffect(() => {
-		fetchTodos(page, limit);
-	}, [page]);
+		fetchTodos(Number(params.id));
+	}, []);
 
-	if (isLoading) {
-		return <h1>Идет загрузка...</h1>;
-	}
 	if (error) {
 		return <h1>{error}</h1>;
 	}
 
 	return (
-		<>
+		<section
+			style={{
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'center'
+			}}
+		>
 			<ul>
-				{todos.map(todo => {
-					const { id, title } = todo;
-					return (
-						<li key={id}>
-							{id}- {title}
-						</li>
-					);
-				})}
+				{isLoading ? (
+					<h1>Идет загрузка...</h1>
+				) : (
+					todos.map(todo => {
+						const { id, title, completed } = todo;
+						return (
+							<TodoItem
+								key={id}
+								id={id}
+								title={title}
+								completed={completed}
+							/>
+						);
+					})
+				)}
 			</ul>
-			<div style={{ display: 'flex', gap: '15px' }}>
-				{pages.map(p => {
-					return (
-						<div
-							key={p}
-							style={{
-								border: p === page ? '2px solid blue' : '2px solid green',
-								padding: '5px'
-							}}
-							onClick={() => setTodoPage(p)}
-						>
-							{p}
-						</div>
-					);
-				})}
-			</div>
-		</>
+		</section>
 	);
 };
 

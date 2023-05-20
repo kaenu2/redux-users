@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { useActiions } from '../hooks/useActiions';
+import { Link } from 'react-router-dom';
 
 const UserList: React.FC = () => {
 	const { error, isLoading, users } = useTypedSelector(state => state.user);
@@ -20,7 +21,11 @@ const UserList: React.FC = () => {
 	return (
 		<ul>
 			{users.map(user => {
-				return <li key={user.id}>{user.name}</li>;
+				return (
+					<li key={user.id}>
+						<Link to={`/users/${user.id}`}>{user.name}</Link>
+					</li>
+				);
 			})}
 		</ul>
 	);

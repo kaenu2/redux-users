@@ -1,9 +1,16 @@
 export interface TodoState {
-	todos: any[];
+	todos: ITodo[];
 	isLoading: boolean;
 	error: null | string;
 	page: number;
 	limit: number;
+}
+
+export interface ITodo {
+	userId: number;
+	id: number;
+	title: string;
+	completed: boolean;
 }
 
 export enum TodoActionTypes {
@@ -18,7 +25,7 @@ interface FetchTodoAction {
 }
 interface FetchTodoSuccessAction {
 	type: TodoActionTypes.FETCH_TODOS_SUCCESS;
-	payload: any[];
+	payload: ITodo[];
 }
 interface FetchTodoErrorAction {
 	type: TodoActionTypes.FETCH_TODOS_ERROR;
